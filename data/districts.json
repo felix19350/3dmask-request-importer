@@ -1,0 +1,82 @@
+[
+    {
+        "id": "5cfb4afe-9b33-4558-9cb7-271772b02f92",
+        "district": "Aveiro"
+    },
+    {
+        "id": "56c2ef00-1816-4a2b-b869-e0a03d0d4f9d",
+        "district": "Beja"
+    },
+    {
+        "id": "4809da6b-30b0-4971-9e68-21a4e468ca2c",
+        "district": "Braga"
+    },
+    {
+        "id": "858ff4c5-3d0b-4c56-a0b6-d05d31af1d2e",
+        "district": "Bragança"
+    },
+    {
+        "id": "cae62036-e3f9-4b48-9a79-eb078551eff3",
+        "district": "Castelo Branco"
+    },
+    {
+        "id": "44cd9cc6-ef3f-4c20-a92e-97ff5da61d52",
+        "district": "Coimbra"
+    },
+    {
+        "id": "5f57e329-827b-492a-a83c-72abc42aa345",
+        "district": "Évora"
+    },
+    {
+        "id": "73f410a7-4316-45c8-9722-7f46f8a4dfaa",
+        "district": "Faro"
+    },
+    {
+        "id": "3dafcfa8-ca97-4160-8da1-61befc288b79",
+        "district": "Guarda"
+    },
+    {
+        "id": "590f0d88-5133-4d4c-90c8-1a78f284fbd0",
+        "district": "Leiria"
+    },
+    {
+        "id": "58355039-2243-4c54-a1b6-765a5e55c5dd",
+        "district": "Lisboa"
+    },
+    {
+        "id": "a982f803-bcda-45c9-ac71-993bfab19142",
+        "district": "Portalegre"
+    },
+    {
+        "id": "0f897f1d-3f4a-46e5-ac8a-c9f42ae5875f",
+        "district": "Porto"
+    },
+    {
+        "id": "03f45ce8-7aa6-4c06-84d2-43e43fab2850",
+        "district": "Santarém"
+    },
+    {
+        "id": "8485964f-8394-4c2e-a37f-a9bccb648c35",
+        "district": "Setúbal"
+    },
+    {
+        "id": "deabb786-d37a-4501-b751-771f5ef67c88",
+        "district": "Viana do Castelo"
+    },
+    {
+        "id": "9a36cedd-bef7-4ee2-9af2-2802dd994176",
+        "district": "Vila Real"
+    },
+    {
+        "id": "e55dab9c-9a42-4ab2-a53f-c05f8691d52f",
+        "district": "Viseu"
+    },
+    {
+        "id": "a142bde1-879e-49a7-ad87-ce6e74b209aa",
+        "district": "RA Madeira"
+    },
+    {
+        "id": "cffa1834-397a-41d7-93a0-bd062eaf88b5",
+        "district": "RA Açores"
+    }
+]

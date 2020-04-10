@@ -1,0 +1,42 @@
+[
+    {
+        "id": "125f345d-9fd9-4f48-b6a2-d20d007dcbd5",
+        "zone": "Braga-Porto"
+    },
+    {
+        "id": "dd94470c-6856-4b76-afde-243830a7eb6d",
+        "zone": "Aveiro-Coimbra"
+    },
+    {
+        "id": "40a8c429-6e1d-4332-99da-d82262f76843",
+        "zone": "Setúbal-Sul (Beja-Évora-Faro)"
+    },
+    {
+        "id": "5e8bda32-7467-416d-825b-09d4f9c3a693",
+        "zone": "Vila Franca-Santarém"
+    },
+    {
+        "id": "e4bde031-2d13-47ea-bf48-319690133769",
+        "zone": "Cascais"
+    },
+    {
+        "id": "8b542bf6-1cb3-4b34-8a2a-f93ceaf7633c",
+        "zone": "Sintra"
+    },
+    {
+        "id": "1e294a95-6a97-414f-8e0a-ff7dbe6b7011",
+        "zone": "Oeste"
+    },
+    {
+        "id": "dd0a9d84-5d10-417a-892b-40197c9a61c7",
+        "zone": "Lisboa"
+    },
+    {
+        "id": "28ef199c-e37a-47ec-a5b1-686c21509de5",
+        "zone": "Loures-Odivelas"
+    },
+    {
+        "id": "6bcd2ec2-9f01-48e1-af17-c8dede4c03fb",
+        "zone": "Lisboa-Norte"
+    }
+]
