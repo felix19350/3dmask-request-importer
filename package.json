@@ -1,0 +1,23 @@
+{
+  "name": "3dmask-request-importer",
+  "version": "1.0.0",
+  "description": "Utility that transforms CSV files with the orders that have been received by 3D Mask PT, and transforms them to sql files that can be ingested by the backoffice",
+  "main": "src/main.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/felix19350/3dmask-request-importer.git"
+  },
+  "author": "Bruno Felix",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/felix19350/3dmask-request-importer/issues"
+  },
+  "homepage": "https://github.com/felix19350/3dmask-request-importer#readme",
+  "dependencies": {
+    "command-line-args": "^5.1.1",
+    "csv-parser": "^2.3.2"
+  }
+}
