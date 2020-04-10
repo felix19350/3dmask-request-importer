@@ -17,13 +17,39 @@ Running this utility produces two outputs:
 
 ### Options:
 Program options are provided via *--<option_name>*, they are optional except when stated otherwise:
-* --src, -s: (**REQUIRED**) path to the source file, e.g.: *--src /tmp/my_file.csv*;
-* --outputDir, -o: folder where the outputs will be writen, e.g.: *--outputDir /home/user*, defaults to: */tmp*;
+* --src, -s: (**REQUIRED**) path to the source file, e.g.: `--src /tmp/my_file.csv`;
+* --outputDir, -o: folder where the outputs will be writen, e.g.: `--outputDir /home/user`, defaults to: */tmp*;
 
 
 ## Input file structure:
 
 **Note that the columns will be indexed by name.**
 
-|Timestamp|Unidade de saúde|Serviço|Nome da Unidade de Saúde (Normalizado)|Distrito / Região|Concelho|Morada|Código Postal|Zona (Manual)|Estado (Manual)|"Coordenador Responsável pela Entrega Agendada"|Prioridade (Manual)|Quantidade|Entregas (Manual)|Nome |Email|Telemóvel|Pessoa de contacto no grupo 3D Mask Portugal (nome/telemóvel)|Observações|Tem uma necessidade real identificada de viseiras?|Está num serviço exposto a infectados COVID-19?|Sabe como colocar e retirar máscara e/ou viseira e entende o nivel de proteção que cada uma providencia?|Nome do Responsável de Serviço|Contacto do Responsável de Serviço|Email Address|
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+|Header|Data type|
+|------|---------|
+|`Timestamp`|Date format: M/DD/YYY H:MM:SS|
+|`Unidade de saúde`|String|
+|`Serviço`|String|
+|`Nome da Unidade de Saúde (Normalizado)`|String|
+|`Distrito / Região`|String|
+|`Concelho`|String|
+|`Morada`|String|
+|`Código Postal`|String|
+|`Zona (Manual)`|String|
+|`Estado (Manual)`|String|
+|`Coordenador Responsável pela Entrega Agendada`|String|
+|`Prioridade (Manual)`|String|
+|`Quantidade`|Number|
+|`Entregas (Manual)`|String|
+|`Nome `|String|
+|`Email`|String|
+|`Telemóvel`|String|
+|`Pessoa de contacto no grupo 3D Mask Portugal (nome/telemóvel)`|String|
+|`Observações`|String|
+|`Tem uma necessidade real identificada de viseiras?`|String|
+|`Está num serviço exposto a infectados COVID-19?`|String|
+|`Sabe como colocar e retirar máscara e/ou viseira e entende o nivel de proteção que cada uma providencia?`|String|
+|`Nome do Responsável de Serviço`|String|
+|`Contacto do Responsável de Serviço`|String|
+|`Email Address`|String|
+
