@@ -2,7 +2,7 @@ const commandLineArgs = require('command-line-args');
 const CsvDataTransformer = require('./CsvDataTransformer');
 
 const optionDefinitions = [
-  { name: 'src', type: String },
+  { name: 'src', alias: 's', type: String },
   { name: 'outputDir', alias: 'o', type: String, defaultValue: '/tmp' }
 ];
 
