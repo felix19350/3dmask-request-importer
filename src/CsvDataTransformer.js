@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
-
-const CsvParser = require("csv-parser");
+const uuid = require("uuid");
+const csv = require("csv-parser");
 const zones = require("../data/zones.json");
 const districts = require("../data/districts.json");
 const municipalities = require("../data/municipalities.json");
@@ -9,7 +9,6 @@ const municipalities = require("../data/municipalities.json");
 class CsvDataTransformer {
 
     constructor(baseDir) {
-        console.log(baseDir);
         this.baseDir = baseDir;
         this.zones = zones.map(it => ({ zone: this.normalizeZoneName(it.zone), id: it.id }));
         this.districts = districts.map(it => ({ district: this.normalizeDistrictName(it.district), id: it.id }));
@@ -22,43 +21,109 @@ class CsvDataTransformer {
 
         const statements = [`--- Output file generated from ${inputFilePath}---`];
         const errors = [];
-        
-        console.log("TODO");
+        const readStream = fs.createReadStream(inputFilePath);
+        let n = 0;
 
-        fs.writeFileSync(sqlOutputPath, statements.join("\n"));
-        fs.writeFileSync(reportFilePath, errors.length === 0 ? "No errors": errors.join("\n"));
-        return { sqlOutputPath, reportFilePath }
+        return new Promise((resolve, reject) => {
+            readStream.pipe(csv())
+                .on("data", (row) => {
+                    try {
+                        n++;
+                        const statementParams = this.transformRow(row);
+                        const columns = statementParams.map(it => it.column).join(",");
+                        const values = statementParams.map(it => this.escapeToSQL(it)).join(",");
+                        const statement = `insert into shield_request (${columns}) values (${values});`;
+                        statements.push(statement);
+                    } catch (err) {
+                        errors.push(`ROW: ${n} | Error: ${err.message}`)
+                    }
+                })
+                .on("end", () => {
+                    statements.push(`--- TOTAL STATEMENTS ${n}`);
+                    fs.writeFileSync(sqlOutputPath, statements.join("\n"));
+                    fs.writeFileSync(reportFilePath, errors.length === 0 ? "No errors" : errors.join("\n"));
+
+                    resolve({ sqlOutputPath, reportFilePath });
+                })
+                .on("error", (err) => {
+                    reject(err);
+                })
+        });
     }
-
 
     lookupZone(inputZone) {
         const normalizedZone = this.normalizeZoneName(inputZone);
-        return this.zones.find(z => z.zone === normalizedZone);
+        const result = this.zones.find(z => z.zone === normalizedZone);
+        if(!result){
+            throw Error(`Cannot find zone: ${normalizedZone}`)
+        }
+        return result.id;
     }
 
     lookupDistrict(inputDistrict) {
         const normalizedDistrictName = this.normalizeDistrictName(inputDistrict);
-        return this.districts.find(d => d.district === normalizedDistrictName);
+        const result = this.districts.find(d => d.district === normalizedDistrictName);
+        if(!result){
+            throw Error(`Cannot find district: ${normalizedDistrictName}`)
+        }
+        return result.id;
     }
 
     lookupMunicipality(inputMunicipality) {
         const normalizedMunicipalityName = this.normalizeMunicipalityName(inputMunicipality);
-        return this.municipalities.find(m => m.municipality === normalizedMunicipalityName);
+        const result = this.municipalities.find(m => m.municipality === normalizedMunicipalityName);
+        if(!result){
+            throw Error(`Cannot find municipality: ${normalizedMunicipalityName}`)
+        }
+        return result.id;
     }
 
     // Applies a well known set of transformations to zone names
     normalizeZoneName(zoneName) {
-        return zoneName.toLowerCase();
+        return zoneName.toLowerCase().trim();
     }
 
     // Applies a well known set of transformations to district names
     normalizeDistrictName(districtName) {
-        return districtName.toLowerCase();
+        return districtName.toLowerCase().trim();
     }
 
     // Applies a well known set of transformations to municipality names
     normalizeMunicipalityName(municipalityName) {
-        return municipalityName.toLowerCase();
+        return municipalityName.toLowerCase().trim();
+    }
+
+    transformRow(row) {
+        return [
+            { column: "id", type: "String", value: uuid.v4() },
+            { column: "entity", type: "String", value: row["Unidade de saúde"] },
+            { column: "service", type: "String", value: row["Serviço"] },
+            { column: "district_id", type: "String", value: this.lookupDistrict(row["Distrito / Região"]) },
+            { column: "municipality_id", type: "String", value: this.lookupMunicipality(row["Concelho"]) },
+            { column: "address", type: "String", value: row["Morada"] },
+            { column: "postal_code", type: "String", value: row["Código Postal"] },
+            { column: "requester_name", type: "String", value: row['Nome '] }, // do not remove the extra space in the row name
+            { column: "requester_email", type: "String", value: row['Email'] },
+            { column: "requester_phone_number", type: "String", value: row['Telemóvel'] },
+            { column: "quantity", type: "Number", value: row['Quantidade'] },
+            { column: "observations", type: "String", value: row['Observações'] },
+            { column: "priority", type: "String", value: "NORMAL" },  // TODO: 
+            { column: "status", type: "String", value: "ACCEPTED" }, // TODO: hardcoded
+            { column: "zone_id", type: "String", value: this.lookupZone(row["Zona (Manual)"]) },
+            { column: "normalized_entity_name", type: "String", value: row["Nome da Unidade de Saúde (Normalizado)"] },
+            { column: "when_created", type: "String", value: new Date().toISOString() }, //TODO: parse date
+            { column: "when_modified", type: "String", value: new Date().toISOString() }, //TODO: parse date
+            { column: "who_created", type: "String", value: "system" },
+            { column: "who_modified", type: "String", value: "system" },
+        ]
+    }
+
+    escapeToSQL(entry) {
+        if (entry.type === "String") {
+            return `'${entry.value ? entry.value : ""}'`;
+        } else {
+            return entry.value ? entry.value : "";
+        }
     }
 }
 

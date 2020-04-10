@@ -14,10 +14,11 @@ if (!options.src) {
 } else {
   try {
     const dataTransformManager = new CsvDataTransformer(options.outputDir);
-    const { sqlOutputPath, reportFilePath } = dataTransformManager.processCsvFile(options.src);
-    console.log(`Transformation process complete.`);
-    console.log(`SQL file went to: ${sqlOutputPath}`);
-    console.log(`Report went to: ${reportFilePath}`)
+    dataTransformManager.processCsvFile(options.src).then(({ sqlOutputPath, reportFilePath }) => {
+      console.log(`Transformation process complete.`);
+      console.log(`SQL file went to: ${sqlOutputPath}`);
+      console.log(`Report went to: ${reportFilePath}`)
+    }).catch(err => { throw err });
   } catch (err) {
     console.error("Data transformation process failed.")
     console.error(err);
