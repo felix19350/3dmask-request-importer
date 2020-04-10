@@ -23,7 +23,7 @@ Program options are provided via *--<option_name>*, they are optional except whe
 
 ## Input file structure:
 
-**Note that the columns will be indexed by name.**
+**Note that the columns will be indexed by name so the headers on the CSV file must have these EXACT names.**
 
 |Header|Data type|
 |------|---------|
