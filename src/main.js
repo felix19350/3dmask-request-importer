@@ -3,13 +3,13 @@ const CsvDataTransformer = require('./CsvDataTransformer');
 
 const optionDefinitions = [
   { name: 'src', type: String },
-  { name: 'outputDir', alias: 'o', type: String, default: '/tmp' }
+  { name: 'outputDir', alias: 'o', type: String, defaultValue: '/tmp' }
 ];
 
 const options = commandLineArgs(optionDefinitions);
 
 if (!options.src) {
-  console.error("Please provide a source CSV file via the src argument. Example: node src/main.js --src test.csv");
+  console.error("Please provide a source CSV file via the src argument. Example: node src/main.js --src test.csv --outputDir /tmp");
   process.exit(-1);
 } else {
   try {

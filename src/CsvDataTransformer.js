@@ -9,6 +9,7 @@ const municipalities = require("../data/municipalities.json");
 class CsvDataTransformer {
 
     constructor(baseDir) {
+        console.log(baseDir);
         this.baseDir = baseDir;
         this.zones = zones.map(it => ({ zone: this.normalizeZoneName(it.zone), id: it.id }));
         this.districts = districts.map(it => ({ district: this.normalizeDistrictName(it.district), id: it.id }));
@@ -16,8 +17,8 @@ class CsvDataTransformer {
     }
 
     processCsvFile(inputFilePath) {
-        const sqlOutputPath = path.join(inputFilePath, `${new Date().toISOString()}_output.sql`);
-        const reportFilePath = path.join(inputFilePath, `${new Date().toISOString()}_report.txt`);
+        const sqlOutputPath = path.join(this.baseDir, `${new Date().toISOString()}_output.sql`);
+        const reportFilePath = path.join(this.baseDir, `${new Date().toISOString()}_report.txt`);
 
         const statements = [`--- Output file generated from ${inputFilePath}---`];
         const errors = [];
