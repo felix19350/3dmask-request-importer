@@ -19,6 +19,7 @@
   "dependencies": {
     "command-line-args": "^5.1.1",
     "csv-parser": "^2.3.2",
+    "moment": "^2.24.0",
     "uuid": "^7.0.3"
   }
 }

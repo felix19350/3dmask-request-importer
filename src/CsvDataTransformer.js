@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const uuid = require("uuid");
 const csv = require("csv-parser");
+const moment = require("moment");
 const zones = require("../data/zones.json");
 const districts = require("../data/districts.json");
 const municipalities = require("../data/municipalities.json");
@@ -107,12 +108,12 @@ class CsvDataTransformer {
             { column: "requester_phone_number", type: "String", value: row['Telemóvel'] },
             { column: "quantity", type: "Number", value: row['Quantidade'] },
             { column: "observations", type: "String", value: row['Observações'] },
-            { column: "priority", type: "String", value: "NORMAL" },  // TODO: 
-            { column: "status", type: "String", value: "ACCEPTED" }, // TODO: hardcoded
+            { column: "priority", type: "String", value: this.lookupPriority(row['Prioridade (Manual)']) },
+            { column: "status", type: "String", value: this.lookupStatus(row['Estado (Manual)']) },
             { column: "zone_id", type: "String", value: this.lookupZone(row["Zona (Manual)"]) },
             { column: "normalized_entity_name", type: "String", value: row["Nome da Unidade de Saúde (Normalizado)"] },
-            { column: "when_created", type: "String", value: new Date().toISOString() }, //TODO: parse date
-            { column: "when_modified", type: "String", value: new Date().toISOString() }, //TODO: parse date
+            { column: "when_created", type: "String", value: this.parseDate(row['Timestamp']) },
+            { column: "when_modified", type: "String", value: this.parseDate(row['Timestamp']) },
             { column: "who_created", type: "String", value: "system" },
             { column: "who_modified", type: "String", value: "system" },
         ]
@@ -123,6 +124,36 @@ class CsvDataTransformer {
             return `'${entry.value ? entry.value : ""}'`;
         } else {
             return entry.value ? entry.value : "";
+        }
+    }
+
+    parseDate(poorlyFormatedDate){
+        return moment(poorlyFormatedDate,'MM/DD/YYYY h:mm:ss').toISOString();
+    }
+
+    lookupPriority(priorityInPt){
+        if(priorityInPt === "Urgente"){
+            return "HIGH";
+        }else if(priorityInPt === "Baixo"){
+            return "LOW";
+        }else{
+            return "NORMAL";
+        }
+    }
+
+    lookupStatus(statusInPt){
+        if(statusInPt === "Aceite"){
+            return "ACCEPTED";
+        }else if(statusInPt === "Em Progresso"){
+            return "IN_PROGRESS";
+        }else if(statusInPt === "Entregue"){
+            return "DELIVERED";
+        }else if(statusInPt === "Recusado"){
+            return "REJECTED";
+        }else if(statusInPt === "Cancelado"){
+            return "CANCELED";
+        }else{
+            return "RECEIVED";
         }
     }
 }
